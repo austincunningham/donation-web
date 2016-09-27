@@ -43,3 +43,10 @@ exports.logout = {
 
 };
 
+exports.register = {
+
+  handler: function (request, reply) {
+    reply.redirect('/home');
+  },
+
+};
