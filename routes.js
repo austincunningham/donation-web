@@ -1,11 +1,8 @@
-/**
- * Created by austin on 27/09/2016.
- */
-const Controller = require('./controller.js');
+const Donations = require('./app/controllers/donations');
 
 module.exports = [
 
-  { method: 'GET', path: '/', config: Controller.index },
+  { method: 'GET', path: '/', config: Donations.home },
 
 ];
 
