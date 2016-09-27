@@ -1,18 +1,17 @@
-/**
- * Created by austin on 27/09/2016.
- */
 'use strict';
 
 exports.home = {
 
   handler: (request, reply) => {
-    reply.file('./app/views/main.html');
+    reply.view('main', { title: 'Welcome to Donations' });
   },
+
 };
+
 exports.signup = {
 
   handler: (request, reply) => {
-    reply.file('./app/views/signup.html');
+    reply.view('signup', { title: 'Sign up for Donations' });
   },
 
 };
@@ -20,7 +19,7 @@ exports.signup = {
 exports.login = {
 
   handler: (request, reply) => {
-    reply.file('./app/views/login.html');
+    reply.view('login', { title: 'Login to Donations' });
   },
 
 };
