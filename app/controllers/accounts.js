@@ -14,7 +14,10 @@ exports.main = {
 exports.signup = {
 
   handler: function (request, reply) {
-    reply.view('signup', { title: 'Sign up for Donations' });
+    reply.view('signup', {
+      title: 'Sign up for Donations',
+      accounts: this.users,
+    });
   },
 
 };
@@ -46,6 +49,8 @@ exports.logout = {
 exports.register = {
 
   handler: function (request, reply) {
+    const data = request.payload;
+    this.users.push(data);
     reply.redirect('/home');
   },
 
