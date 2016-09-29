@@ -10,6 +10,7 @@ server.connection({ port: process.env.PORT || 4000 });
 
 server.bind({
   users: [],
+  currentUser : {},
   donations: [],
 });
 

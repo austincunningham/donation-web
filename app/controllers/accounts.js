@@ -25,7 +25,9 @@ exports.signup = {
 exports.login = {
 
   handler: function (request, reply) {
-    reply.view('login', { title: 'Login to Donations' });
+    reply.view('login', {
+      title: 'Login to Donations',
+    });
   },
 
 };
@@ -33,8 +35,18 @@ exports.login = {
 exports.authenticate = {
 
   handler: function (request, reply) {
-    reply.redirect('/home');
-  },
+    this.currentUser = request.payload;
+    for (let i=0; i< this.users.length ; i++) {
+      if ((this.users[i].email == this.currentUser.email) && (this.users[i].password == this.currentUser.password)) {
+        console.log('true');
+        reply.redirect('/home');
+      } else {
+        console.log('false try again');
+        //reply.redirect('/');
+      }
+    }
+
+  }
 
 };
 
@@ -51,7 +63,7 @@ exports.register = {
   handler: function (request, reply) {
     const data = request.payload;
     this.users.push(data);
-    reply.redirect('/home');
+    reply.redirect('/login');
   },
 
 };
