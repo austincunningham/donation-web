@@ -35,18 +35,14 @@ exports.login = {
 exports.authenticate = {
 
   handler: function (request, reply) {
-    this.currentUser = request.payload;
-    for (let i=0; i< this.users.length ; i++) {
-      if ((this.users[i].email == this.currentUser.email) && (this.users[i].password == this.currentUser.password)) {
-        console.log('true');
-        reply.redirect('/home');
-      } else {
-        console.log('false try again');
-        //reply.redirect('/');
-      }
+    const user = request.payload;
+    if ((user.email in this.users) && (user.password === this.users[user.email].password)) {
+      this.currentUser = this.users[user.email];
+      reply.redirect('/home');
+    } else {
+      reply.redirect('/signup');
     }
-
-  }
+  },
 
 };
 
@@ -61,8 +57,8 @@ exports.logout = {
 exports.register = {
 
   handler: function (request, reply) {
-    const data = request.payload;
-    this.users.push(data);
+    const user = request.payload;
+    this.users[user.email] = user;
     reply.redirect('/login');
   },
 

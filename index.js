@@ -9,11 +9,10 @@ var server = new Hapi.Server();
 server.connection({ port: process.env.PORT || 4000 });
 
 server.bind({
-  users: [],
-  currentUser : {},
+  currentUser: {},
+  users: {},
   donations: [],
 });
-
 server.register([require('inert'), require('vision')], err => {
 
   if (err) {

@@ -24,13 +24,12 @@ exports.donate = {
 
   handler: function (request, reply) {
     const data = request.payload;
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].email == this.currentUser.email) {
-        const user = '';
-        data.user =  this.users[i].firstName +' '+ this.users[i].lastName;
+      //if (this.users[email] === this.currentUser.email) {
+        const donationUser = '';
+        data.donationUser = this.currentUser;
+        //data.donationUser =  this.users[user.email].firstName +' '+ this.users[user.email].lastName;
 
-        }
-      }
+        //}
       this.donations.push(data);
       reply.redirect('/report');
     }
