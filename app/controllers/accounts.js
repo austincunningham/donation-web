@@ -65,3 +65,22 @@ exports.register = {
     reply.redirect('/login');
   },
 };
+
+exports.viewSettings = {
+
+  handler: function (request, reply) {
+    reply.view('settings', {
+      title: 'Settings for the user',
+      accounts: this.users,
+    });
+  }
+
+};
+
+exports.updateSettings = {
+  handler: function (request, reply) {
+    const user = request.payload;
+    this.users[user.email] = user;
+    reply.redirect('/home');
+  }
+};
