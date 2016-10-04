@@ -4,7 +4,7 @@
 'use strict';
 
 exports.main = {
-
+  auth: false,
   handler: function (request, reply) {
     reply.view('main', { title: 'Welcome to Donations' });
   },
@@ -12,7 +12,7 @@ exports.main = {
 };
 
 exports.signup = {
-
+  auth: false,
   handler: function (request, reply) {
     reply.view('signup', {
       title: 'Sign up for Donations',
@@ -23,7 +23,7 @@ exports.signup = {
 };
 
 exports.login = {
-
+  auth: false,
   handler: function (request, reply) {
     reply.view('login', {
       title: 'Login to Donations',
