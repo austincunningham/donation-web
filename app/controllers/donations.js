@@ -23,17 +23,13 @@ exports.report = {
 exports.donate = {
 
   handler: function (request, reply) {
-    const data = request.payload;
-      //if (this.users[email] === this.currentUser.email) {
-        const donationUser = '';
-        data.donationUser = this.currentUser;
-        //data.donationUser =  this.users[user.email].firstName +' '+ this.users[user.email].lastName;
+    let data = request.payload;
+    var donorEmail = request.auth.credentials.loggedInUser;
+    data.donor = this.users[donorEmail];
+    this.donations.push(data);
+    reply.redirect('/report');
+  },
 
-        //}
-      this.donations.push(data);
-      reply.redirect('/report');
-    }
-
-  };
+};
 
 

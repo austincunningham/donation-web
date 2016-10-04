@@ -29,7 +29,6 @@ exports.login = {
       title: 'Login to Donations',
     });
   },
-
 };
 
 exports.authenticate = {
@@ -59,11 +58,10 @@ exports.logout = {
 };
 
 exports.register = {
-
+  auth: false,
   handler: function (request, reply) {
     const user = request.payload;
     this.users[user.email] = user;
     reply.redirect('/login');
   },
-
 };
