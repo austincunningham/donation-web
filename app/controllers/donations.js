@@ -1,4 +1,6 @@
 'use strict';
+const Donation = require('../models/donation');
+
 
 exports.home = {
 
@@ -8,26 +10,31 @@ exports.home = {
 
 };
 
-exports.report = {
+exports.donate = {
 
   handler: function (request, reply) {
-    reply.view('report', {
-      title: 'Donations to Date',
-      donations: this.donations,
-      user: this.currentUser,
+    let data = request.payload;
+    const donation = new Donation(data);
+    donation.save().then(newDonation => {
+      reply.redirect('/report');
+    }).catch(err => {
+      reply.redirect('/');
     });
   },
 
 };
 
-exports.donate = {
+exports.report = {
 
   handler: function (request, reply) {
-    let data = request.payload;
-    var donorEmail = request.auth.credentials.loggedInUser;
-    data.donor = this.users[donorEmail];
-    this.donations.push(data);
-    reply.redirect('/report');
+    Donation.find({}).exec().then(allDonations => {
+      reply.view('report', {
+        title: 'Donations to Date',
+        donations: allDonations,
+      });
+    }).catch(err => {
+      reply.redirect('/');
+    });
   },
 
 };
