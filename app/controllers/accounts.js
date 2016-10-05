@@ -79,9 +79,11 @@ exports.register = {
 exports.viewSettings = {
 
   handler: function (request, reply) {
-    reply.view('settings', {
-      title: 'Settings for the user',
-      accounts: this.users,
+    var userEmail = request.auth.credentials.loggedInUser;
+    User.findOne({ email: userEmail }).then(foundUser => {
+      reply.view('settings', { title: 'Edit Account Settings', user: foundUser });
+    }).catch(err => {
+      reply.redirect('/');
     });
   }
 
@@ -89,8 +91,16 @@ exports.viewSettings = {
 
 exports.updateSettings = {
   handler: function (request, reply) {
-    const user = request.payload;
-    this.users[user.email] = user;
-    reply.redirect('/home');
+    const editedUser = request.payload;
+    var loggedInUserEmail = request.auth.credentials.loggedInUser;
+    User.findOne({ email: loggedInUserEmail }).then(user => {
+      user.firstName = editedUser.firstName;
+      user.lastName = editedUser.lastName;
+      user.email = editedUser.email;
+      user.password = editedUser.password;
+      return user.save();
+    }).then(user => {
+      reply.view('settings', { title: 'Edit Account Settings', user: user });
+    });
   }
 };
