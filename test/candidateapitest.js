@@ -8,13 +8,7 @@ var request = require('sync-request');
 
 suite('Candidate API tests', function () {
 
-  /*test('get candidates', function () {
-    const url = 'http://localhost:4000/api/candidates';
-    var res = request('GET', url);
-    const candidates = JSON.parse(res.getBody('utf8'));
-    assert.equal(2, candidates.length);
-
-  });*/
+  //test to find all candidates
   test('get candidates', function () {
 
     const url = 'http://localhost:4000/api/candidates';
@@ -32,7 +26,7 @@ suite('Candidate API tests', function () {
     assert.equal(candidates[1].office, 'President');
 
   });
-
+  //test to find one candidate
   test('get one candidate', function () {
 
     const allCandidatesUrl = 'http://localhost:4000/api/candidates';
@@ -46,6 +40,25 @@ suite('Candidate API tests', function () {
     assert.equal(oneCandidate.firstName, 'Lisa');
     assert.equal(oneCandidate.lastName, 'Simpson');
     assert.equal(oneCandidate.office, 'President');
+
+  });
+
+  //test to create one candidate
+  test('creat a candidate', function () {
+
+    const candidatesUrl = 'http://localhost:4000/api/candidates';
+    const newCandidate = {
+      firstName: 'Barnie',
+      lastName: 'Grumble',
+      office: 'President',
+    };
+
+    const res = request('POST', candidatesUrl, { json: newCandidate });
+    const returnedCandidate = JSON.parse(res.getBody('utf8'));
+
+    assert.equal(returnedCandidate.firstName, 'Barnie');
+    assert.equal(returnedCandidate.lastName, 'Grumble');
+    assert.equal(returnedCandidate.office, 'President');
 
   });
 
