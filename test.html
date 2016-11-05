@@ -1,0 +1,15 @@
+<script type="text/javascript">
+    function countChars(count,output) {
+        let countdown = 141 - document.getElementById(count).value.length;
+        document.getElementById(output).innerHTML = countdown;
+    }
+</script>
+
+<textarea id="data" cols="40" rows="5"
+          onkeyup="countChars('data','count');"
+          onkeydown="countChars('data','count');"
+          onmouseout="countChars('data','count');">
+
+</textarea><br>
+<span id="count">140</span> characters entered.
+
