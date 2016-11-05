@@ -18,7 +18,7 @@ mongoose.connection.on('connected', function () {
   console.log('Mongoose connected to ' + dbURI);
   if (process.env.NODE_ENV != 'production') {
     var seeder = require('mongoose-seeder');
-    const data = require('./initdata.json');
+    const data = require('./data.json');
     const Donation = require('./donation');
     const User = require('./user');
     const Candidate = require('./candidate.js');
@@ -30,7 +30,6 @@ mongoose.connection.on('connected', function () {
     });
   }
 });
-
 mongoose.connection.on('error', function (err) {
   console.log('Mongoose connection error: ' + err);
 });
