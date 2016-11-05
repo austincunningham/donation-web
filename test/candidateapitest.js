@@ -1,65 +1,41 @@
-/**
- * Created by austin on 05/11/2016.
- */
 'use strict';
 
 const assert = require('chai').assert;
-var request = require('sync-request');
+const DonationService = require('./donation-service');
+const fixtures = require('./fixtures.json');
+const _ = require('lodash');
 
 suite('Candidate API tests', function () {
 
-  //test to find all candidates
-  test('get candidates', function () {
+  let candidates = fixtures.candidates;
+  let newCandidate = fixtures.newCandidate;
 
-    const url = 'http://localhost:4000/api/candidates';
-    var res = request('GET', url);
-    const candidates = JSON.parse(res.getBody('utf8'));
-
-    assert.equal(2, candidates.length);
-
-    assert.equal(candidates[0].firstName, 'Lisa');
-    assert.equal(candidates[0].lastName, 'Simpson');
-    assert.equal(candidates[0].office, 'President');
-
-    assert.equal(candidates[1].firstName, 'Donald');
-    assert.equal(candidates[1].lastName, 'Simpson');
-    assert.equal(candidates[1].office, 'President');
-
-  });
-  //test to find one candidate
-  test('get one candidate', function () {
-
-    const allCandidatesUrl = 'http://localhost:4000/api/candidates';
-    var res = request('GET', allCandidatesUrl);
-    const candidates = JSON.parse(res.getBody('utf8'));
-
-    const oneCandidateUrl = allCandidatesUrl + '/' + candidates[0]._id;
-    res = request('GET', oneCandidateUrl);
-    const oneCandidate = JSON.parse(res.getBody('utf8'));
-
-    assert.equal(oneCandidate.firstName, 'Lisa');
-    assert.equal(oneCandidate.lastName, 'Simpson');
-    assert.equal(oneCandidate.office, 'President');
-
+  const donationService = new DonationService('http://localhost:4000');
+   //verbose
+  /*test('create a candidate', function () {
+    const returnedCandidate = donationService.createCandidate(newCandidate);
+    assert.equal(returnedCandidate.firstName, newCandidate.firstName);
+    assert.equal(returnedCandidate.lastName, newCandidate.lastName);
+    assert.equal(returnedCandidate.office, newCandidate.office);
+    assert.isDefined(returnedCandidate._id);
+  });*/
+  //fails because id and v are not included
+  /*test('create a candidate', function () {
+    const returnedCandidate = donationService.createCandidate(newCandidate);
+    assert.equal(returnedCandidate, newCandidate);
+    assert.isDefined(returnedCandidate._id);
+  });*/
+  // lodash searches for a subset so doesn't return a _id or v
+  test('create a candidate', function () {
+    const returnedCandidate = donationService.createCandidate(newCandidate);
+    assert(_.some([returnedCandidate], newCandidate),  'returnedCandidate must be a superset of newCandidate');
+    assert.isDefined(returnedCandidate._id);
   });
 
-  //test to create one candidate
-  test('creat a candidate', function () {
-
-    const candidatesUrl = 'http://localhost:4000/api/candidates';
-    const newCandidate = {
-      firstName: 'Barnie',
-      lastName: 'Grumble',
-      office: 'President',
-    };
-
-    const res = request('POST', candidatesUrl, { json: newCandidate });
-    const returnedCandidate = JSON.parse(res.getBody('utf8'));
-
-    assert.equal(returnedCandidate.firstName, 'Barnie');
-    assert.equal(returnedCandidate.lastName, 'Grumble');
-    assert.equal(returnedCandidate.office, 'President');
-
+  test('delete a candidate', function () {
+    const c = donationService.createCandidate(newCandidate);
+    assert(donationService.getCandidate(c._id) != null);
+    donationService.deleteOneCandidate(c._id);
+    assert(donationService.getCandidate(c._id) == null);
   });
-
 });
