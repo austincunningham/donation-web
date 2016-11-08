@@ -51,6 +51,18 @@ class DonationService {
   deleteOneCandidate(id) {
     return this.httpService.delete('/api/candidates/' + id);
   }
+
+  makeDonation(id, donation) {
+    return this.httpService.post('/api/candidates/' + id + '/donations', donation);
+  }
+
+  getDonations(id) {
+    return this.httpService.get('/api/candidates/' + id + '/donations');
+  }
+
+  deleteAllDonations() {
+    return this.httpService.delete('/api/donations');
+  }
 }
 
 module.exports = DonationService;
