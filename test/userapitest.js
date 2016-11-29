@@ -13,7 +13,7 @@ suite('User API test', function(){
   let users = fixtures.users;
   let newUser = fixtures.newUser;
 
-  const donationServices = new DonationService('http://localhost:4000');
+  const donationServices = new DonationService('https://localhost:4000');
 
   beforeEach(function (){
     donationServices.deleteAllUsers();

@@ -4,9 +4,26 @@
 'use strict';
 
 const Hapi = require('hapi');
+const corsHeaders = require('hapi-cors-headers');
+/* self signed cert
+const fs = require('fs');
+
+if (process.env.NODE_ENV === 'production') {
+  var options = {
+    port: process.env.PORT || 4443, //any port will do
+    tls: {
+      key: fs.readFileSync('private/webserver.key'),
+      cert: fs.readFileSync('private/webserver.crt')
+    }
+  };
+} else {
+  var options = { port: process.env.PORT || 4000 }
+};
+*/
 
 var server = new Hapi.Server();
 server.connection({ port: process.env.PORT || 4000 });
+//server.connection(options);
 
 /*server.bind({
   //currentUser: {},
@@ -46,6 +63,7 @@ server.register([require('inert'), require('vision'), require('hapi-auth-cookie'
     strategy: 'standard',
   });
 
+  server.ext('onPreResponse', corsHeaders);
   server.route(require('./routes'));
   server.route(require('./routesapi'));
   server.start((err) => {

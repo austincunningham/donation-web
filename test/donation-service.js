@@ -4,7 +4,7 @@
 'use strict';
 
 const SyncHttpService = require('./sync-http-service');
-const baseUrl = 'http://localhost:4000';
+const baseUrl = 'http://localhost:4000';// cert added so now using https
 
 class DonationService {
 
@@ -64,7 +64,7 @@ class DonationService {
     return this.httpService.delete('/api/donations');
   }
 
-  deleteCandidatesDonation(){
+  deleteCandidatesDonations(id){
     return this.httpService.delete('/api/candidates/' + id + '/donations')
   }
 }
