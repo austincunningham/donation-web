@@ -67,6 +67,10 @@ class DonationService {
   deleteCandidatesDonations(id){
     return this.httpService.delete('/api/candidates/' + id + '/donations')
   }
+
+  authenticate(user) {
+    return this.httpService.post('/api/users/authenticate', user);
+  }
 }
 
 module.exports = DonationService;
