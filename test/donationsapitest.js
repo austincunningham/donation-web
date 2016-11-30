@@ -10,12 +10,14 @@ const _ = require('lodash');
 
 suite('Donation API tests', function () {
 
+  let users = fixtures.users;
   let donations = fixtures.donations;
   let newCandidate = fixtures.newCandidate;
 
   const donationService = new DonationService('http://localhost:4000');
 
   beforeEach(function () {
+    donationService.login(users[0]);
     donationService.deleteAllCandidates();
     donationService.deleteAllDonations();
   });
@@ -23,6 +25,7 @@ suite('Donation API tests', function () {
   afterEach(function () {
     donationService.deleteAllCandidates();
     donationService.deleteAllDonations();
+    donationService.logout();
   });
 
   test('create a donation', function () {
