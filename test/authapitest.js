@@ -31,4 +31,12 @@ suite('Candidate API tests', function () {
     assert.isDefined(response.token);
   });
 
+  test('verify Token', function () {
+    const returnedUser = donationService.createUser(newUser);
+    const response = donationService.authenticate(newUser);
+
+    const userInfo = utils.decodeToken(response.token);
+    assert.equal(userInfo.email, returnedUser.email);
+    assert.equal(userInfo.userId, returnedUser._id);
+  });
 });
